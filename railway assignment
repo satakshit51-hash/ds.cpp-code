@@ -1,0 +1,173 @@
+#include <iostream>
+using namespace std;
+
+struct passenger {
+    char name[50];
+    int age;
+    char gender;
+    int seat_number;
+    passenger* next = nullptr;
+};
+
+int main() {
+    int seat[30];
+    int choice;
+    passenger* head = nullptr;
+
+    
+    for (int i = 0; i < 30; i++) {
+        seat[i] = 0;
+    }
+
+    do {
+        cout << "\n--- Railway Reservation System ---\n";
+        cout << "1. View seat status\n";
+        cout << "2. Book ticket\n";
+        cout << "3. View passenger list\n";
+        cout << "4. Cancel ticket\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+
+            case 1: {
+                for (int i = 0; i < 30; i++) {
+                    cout << "Seat " << i + 1 << ": ";
+
+                    if (seat[i] == 0)
+                        cout << "Empty";
+                    else
+                        cout << "Booked";
+
+                    cout << endl;
+                }
+                break;
+            }
+
+            case 2: {
+                int i;
+
+                
+                for (i = 0; i < 30; i++) {
+                    if (seat[i] == 0)
+                        break;
+                }
+
+                if (i == 30) {
+                    cout << "All seats are booked.\n";
+                    break;
+                }
+
+                passenger* p = new passenger{};
+
+                cout << "Enter passenger name: ";
+                cin >> P->name;
+
+                cout << "Enter age: ";
+                cin >> p->age;
+
+                cout << "Enter gender (M/F): ";
+                cin >> p->gender;
+
+                seat[i] = 1;
+                p->seat_number = i + 1;
+
+                
+                if (head == nullptr) {
+                    head = p;
+                } else {
+                    passenger* temp = head;
+
+                    while (temp->next != nullptr) {
+                        temp = temp->next;
+                    }
+
+                    temp->next = p;
+                }
+
+                cout << "Ticket booked successfully!\n";
+                cout << "Your seat number is: "
+                     << p->seat_number << endl;
+
+                break;
+            }
+
+            case 3: {
+                passenger* temp = head;
+
+                if (temp == nullptr) {
+                    cout << "No passengers booked yet.\n";
+                } else {
+                    while (temp != nullptr) {
+                        cout << "\nPassenger Name: "
+                             << temp->name << endl;
+                        cout << "Age: " << temp->age << endl;
+                        cout << "Gender: " << temp->gender << endl;
+                        cout << "Seat Number: "
+                             << temp->seat_number << endl;
+
+                        temp = temp->next;
+                    }
+                }
+
+                break;
+            }
+
+            case 4: {
+                int seatNo;
+
+                cout << "Enter seat number to cancel (1-30): ";
+                cin >> seatNo;
+
+                if (seatNo < 1 || seatNo > 30 ||
+                    seat[seatNo - 1] == 0) {
+                    cout << "Invalid seat number or seat is empty.\n";
+                    break;
+                }
+
+                passenger* temp = head;
+                passenger* prev = nullptr;
+
+                while (temp != nullptr &&
+                       temp->seat_number != seatNo) {
+                    prev = temp;
+                    temp = temp->next;
+                }
+
+                if (temp != nullptr) {
+                    if (prev == nullptr)
+                        head = temp->next;
+                    else
+                        prev->next = temp->next;
+
+                    delete temp;
+                    seat[seatNo - 1] = 0;
+
+                    cout << "Ticket cancelled successfully.\n";
+                }
+
+                break;
+            }
+
+            case 5:
+                cout << "Exiting Railway Reservation System.\n";
+                break;
+
+            default:
+                cout << "Invalid choice. Try again.\n";
+        }
+
+    } while (choice != 5);
+
+  
+    passenger* temp = head;
+
+    while (temp != nullptr) {
+        passenger* nextNode = temp->next;
+        delete temp;
+        temp = nextNode;
+    }
+
+    return 0;
+}
